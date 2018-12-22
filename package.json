@@ -1,0 +1,16 @@
+{
+  "name": "graph-editor",
+  "version": "1.0.0",
+  "author": "Gilles De Mey <gilles.de.mey@gmail.com>",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "yarn parcel serve index.html --target=browser --open"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0",
+    "standard": "^12.0.1"
+  },
+  "dependencies": {
+    "konva": "^2.6.0"
+  }
+}
