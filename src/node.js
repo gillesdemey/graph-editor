@@ -1,4 +1,5 @@
 import { Group, Rect, Text } from 'konva'
+import { getBezierPoints } from './utils'
 
 class GraphNode extends Group {
   constructor (options = {}, details = {}) {
@@ -9,6 +10,7 @@ class GraphNode extends Group {
     super(Object.assign(defaults, options))
 
     const { id, label, color, textColor } = details
+    this.connections = new Set()
 
     const contentGroup = new Group()
 
@@ -80,6 +82,16 @@ class GraphNode extends Group {
     contentGroup.add(rect, text)
     this.add(contentGroup, rightHandle, leftHandle)
 
+    this.on('dragmove', () => {
+      for (const [node, line, handleStart, handleEnd] of this.connections) {
+        const bezierPoints = getBezierPoints(
+          handleStart.getAbsolutePosition(),
+          handleEnd.getAbsolutePosition()
+        )
+        line.setPoints(bezierPoints)
+      }
+    })
+
     return this
   }
 
@@ -89,6 +101,11 @@ class GraphNode extends Group {
 
   getLeftHandlePosition () {
     return this.findOne('.leftHandle').getAbsolutePosition()
+  }
+
+  // tracks connections to other nodes
+  addConnection (...args) {
+    this.connections.add([...args])
   }
 }
 
