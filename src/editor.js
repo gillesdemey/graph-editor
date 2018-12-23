@@ -35,9 +35,12 @@ class Editor extends Stage {
       opacity: 0.3
     })
 
+    const startPos = node1.findOne('.rightHandle')
+    const endPos = node2.findOne('.leftHandle')
+
     // copy line and node to each node
-    node1.addConnection(node2, quadLine, node1.findOne('.rightHandle'), node2.findOne('.leftHandle'))
-    node2.addConnection(node1, quadLine, node2.findOne('.leftHandle'), node1.findOne('.rightHandle'))
+    node1.addConnection(node2, quadLine, startPos, endPos)
+    node2.addConnection(node1, quadLine, startPos, endPos)
 
     this._baseLayer.add(quadLine).draw()
 
