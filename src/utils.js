@@ -33,15 +33,9 @@ function getBezierPoints (startPost, endPos) {
   }
 
   if (toTheLeftAndAbove) {
-    controlPoint1 = [ x1 + (xDiff / 2), Math.max((y1 + (yDiff * 2)), (y1 + 50)) ]
-    controlPoint2 = [ x2 - (xDiff / 2), Math.max((y1 + (yDiff * 2)), (y1 + 50)) ]
+    controlPoint1 = [ x1 + Math.max((xDiff / 2), 20), y1 ]
+    controlPoint2 = [ x2 - Math.max((xDiff / 2), 20), y2 ]
   }
-
-  // const cp1 = new Circle({ radius: 5, stroke: 'red', x: controlPoint1[0], y: controlPoint1[1], opacity: 0.2 })
-  // const cp2 = new Circle({ radius: 5, stroke: 'red', x: controlPoint2[0], y: controlPoint2[1], opacity: 0.2 })
-  // this.getStage()._baseLayer.add(cp1)
-  // this.getStage()._baseLayer.add(cp2)
-  // this.getStage()._baseLayer.draw()
 
   return [
     x1, y1,
