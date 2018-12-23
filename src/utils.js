@@ -33,8 +33,8 @@ function getBezierPoints (startPost, endPos) {
   }
 
   if (toTheLeftAndAbove) {
-    controlPoint1 = [ x1 + Math.max((xDiff / 2), 20), y1 ]
-    controlPoint2 = [ x2 - Math.max((xDiff / 2), 20), y2 ]
+    controlPoint1 = [ x1 + Math.max((xDiff / 2), 10), y1 ]
+    controlPoint2 = [ x2 - Math.max((xDiff / 2), 10), y2 ]
   }
 
   return [
