@@ -9,13 +9,53 @@ class GraphNode extends Group {
     }
     super(Object.assign(defaults, options))
 
-    const { id, label, color, textColor } = details
-    this.connections = new Set()
+    this._data = details
+    const { id, label, color, textColor, states } = details
 
-    const contentGroup = new Group()
+    this.connections = new Set()
+    this.contentGroup = new Group()
+
+    this.drawLabel(label || id, { color, textColor })
+
+    if (states) {
+      this.drawStates(states)
+    }
+
+    this.on('dragmove', () => {
+      for (const [node, line, handleStart, handleEnd] of this.connections) {
+        const bezierPoints = getBezierPoints(
+          handleStart.getAbsolutePosition(),
+          handleEnd.getAbsolutePosition()
+        )
+        line.setPoints(bezierPoints)
+      }
+    })
+
+    return this
+  }
+
+  getRightHandlePosition () {
+    return this.findOne('.rightHandle').getAbsolutePosition()
+  }
+
+  getLeftHandlePosition () {
+    return this.findOne('.leftHandle').getAbsolutePosition()
+  }
+
+  // tracks connections to other nodes
+  addConnection (...args) {
+    this.connections.add([...args])
+  }
+
+  drawStates (states) {
+
+  }
+
+  drawLabel (label, { color, textColor }) {
+    const { contentGroup } = this
 
     const text = new Text({
-      text: label || id,
+      text: label,
       fontSize: 15,
       fontFamily: 'monospace',
       fill: textColor || '#7f8c8d',
@@ -40,6 +80,7 @@ class GraphNode extends Group {
         y: text.height() / 2
       }
     })
+    this.drawHandles(rect)
 
     text.on('mouseenter', () => {
       contentGroup.getStage().container().style.cursor = 'move'
@@ -49,7 +90,12 @@ class GraphNode extends Group {
       contentGroup.getStage().container().style.cursor = 'default'
     })
 
+    contentGroup.add(rect, text)
+  }
+
+  drawHandles (rect) {
     const HANDLE_SIZE = 10
+    const { contentGroup } = this
 
     const leftHandle = new Rect({
       name: 'leftHandle',
@@ -77,35 +123,7 @@ class GraphNode extends Group {
     leftHandle.on('mousedown', _stopPropagation)
     rightHandle.on('mousedown', _stopPropagation)
 
-    this._data = details
-
-    contentGroup.add(rect, text)
     this.add(contentGroup, rightHandle, leftHandle)
-
-    this.on('dragmove', () => {
-      for (const [node, line, handleStart, handleEnd] of this.connections) {
-        const bezierPoints = getBezierPoints(
-          handleStart.getAbsolutePosition(),
-          handleEnd.getAbsolutePosition()
-        )
-        line.setPoints(bezierPoints)
-      }
-    })
-
-    return this
-  }
-
-  getRightHandlePosition () {
-    return this.findOne('.rightHandle').getAbsolutePosition()
-  }
-
-  getLeftHandlePosition () {
-    return this.findOne('.leftHandle').getAbsolutePosition()
-  }
-
-  // tracks connections to other nodes
-  addConnection (...args) {
-    this.connections.add([...args])
   }
 }
 
