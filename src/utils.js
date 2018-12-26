@@ -45,6 +45,11 @@ function getBezierPoints (startPost, endPos) {
   ]
 }
 
+function stopPropagation (event) {
+  event.cancelBubble = true
+}
+
 export {
-  getBezierPoints
+  getBezierPoints,
+  stopPropagation
 }

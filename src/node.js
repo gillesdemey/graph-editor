@@ -1,5 +1,5 @@
 import { Group, Rect, Text } from 'konva'
-import { getBezierPoints } from './utils'
+import { getBezierPoints, stopPropagation } from './utils'
 
 class GraphNode extends Group {
   constructor (options = {}, details = {}) {
@@ -120,15 +120,11 @@ class GraphNode extends Group {
     })
 
     // disable drag when initiated from a handle — so we can join nodes
-    leftHandle.on('mousedown', _stopPropagation)
-    rightHandle.on('mousedown', _stopPropagation)
+    leftHandle.on('mousedown', stopPropagation)
+    rightHandle.on('mousedown', stopPropagation)
 
     this.add(contentGroup, rightHandle, leftHandle)
   }
-}
-
-function _stopPropagation (event) {
-  event.cancelBubble = true
 }
 
 export default GraphNode
