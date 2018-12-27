@@ -71,7 +71,7 @@ class GraphNode extends Group {
     })
 
     text.offset({
-      x: (text.width() / 2) - (ICON_SIZE / 3),
+      x: (text.width() / 2) - ((ICON_SIZE / 2) - (PADDING / 2)),
       y: text.height() / 2
     })
 
