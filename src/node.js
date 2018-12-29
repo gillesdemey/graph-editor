@@ -6,6 +6,7 @@ import { HANDLE_COLOR } from './themes/dark'
 import { getBezierPoints, stopPropagation, setCursor } from './utils'
 
 import createHead from './node/head'
+import createAnnotations from './node/annotations'
 // import createStates from './node/states'
 
 class GraphNode extends Group {
@@ -56,16 +57,15 @@ class GraphNode extends Group {
     return this.connections.has(node)
   }
 
-  drawStates (states) {
-
-  }
-
   drawNode (details) {
     const head = createHead(details)
     this.add(head)
 
     const handles = this.createHandles(head)
     this.add(...handles)
+
+    const annotations = createAnnotations(details, head)
+    this.add(annotations)
 
     return this
   }
