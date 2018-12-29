@@ -49,7 +49,12 @@ function stopPropagation (event) {
   event.cancelBubble = true
 }
 
+function setCursor (node, cursor) {
+  node.getStage().container().style.cursor = cursor
+}
+
 export {
   getBezierPoints,
-  stopPropagation
+  stopPropagation,
+  setCursor
 }

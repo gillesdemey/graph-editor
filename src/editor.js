@@ -1,6 +1,7 @@
 import { Layer, Stage, Line } from 'konva'
 import GraphNode from './node'
 import { getBezierPoints } from './utils'
+import { LINE_COLOR } from './themes/light'
 
 class Editor extends Stage {
   constructor (options) {
@@ -10,6 +11,7 @@ class Editor extends Stage {
     const layer = new Layer()
     this.add(layer)
 
+    this._theme = options.theme
     this._baseLayer = layer
     return this
   }
@@ -28,7 +30,7 @@ class Editor extends Stage {
     const bezierPoints = getBezierPoints(pos1, pos2)
     const quadLine = new Line({
       strokeWidth: 2,
-      stroke: 'black',
+      stroke: LINE_COLOR,
       lineCap: 'round',
       bezier: true,
       points: bezierPoints,
@@ -42,7 +44,10 @@ class Editor extends Stage {
     node1.addConnection(node2, quadLine, startPos, endPos)
     node2.addConnection(node1, quadLine, startPos, endPos)
 
-    this._baseLayer.add(quadLine).draw()
+    this._baseLayer.add(quadLine)
+    // lines should always be draw below everything else
+    quadLine.moveToBottom()
+    this._baseLayer.draw()
 
     return quadLine
   }
