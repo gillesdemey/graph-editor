@@ -21,6 +21,13 @@ class Editor extends Stage {
     return node
   }
 
+  addNote (options, details) {
+    const node = new GraphNode(options, { ...details, color: '#feca57', type: 'INFO' })
+    this._baseLayer.add(node).draw()
+
+    return node
+  }
+
   connectNodes (node1, node2) {
     if (node1.hasConnection(node2)) return
 

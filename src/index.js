@@ -14,6 +14,7 @@ const y = window.innerHeight / 2
 
 const e1 = editor.addNode({ x, y }, {
   id: 'weather_1',
+  type: 'SENSOR',
   label: 'Get Weather Info',
   plug: 'currentWeather v1.0.8',
   states: ['clear', 'rainy'],
@@ -25,6 +26,7 @@ const e1 = editor.addNode({ x, y }, {
 
 const e2 = editor.addNode({ x: x + 300, y: y - 50 }, {
   id: 'twitter_1',
+  type: 'ACTUATOR',
   label: 'Send Twitter DM',
   plug: 'sendTwitterDM v1.0.2',
   icon: 'https://twemoji.maxcdn.com/36x36/1f4ec.png'
@@ -32,15 +34,20 @@ const e2 = editor.addNode({ x: x + 300, y: y - 50 }, {
 
 const e3 = editor.addNode({ x: x + 300, y: y + 50 }, {
   id: 'sendmail_1',
+  type: 'ACTUATOR',
   label: 'Send Email',
   icon: 'https://twemoji.maxcdn.com/36x36/1f4e8.png'
 })
 
 const e4 = editor.addNode({ x: x + 500, y: y }, {
   id: 'formula_1',
+  type: 'SENSOR',
   label: 'Calculate',
   icon: 'https://twemoji.maxcdn.com/36x36/1f4b1.png'
 })
+
+const note = editor.addNote({ x, y: y - 80 }, { label: `Hello, world!
+This is a simple note! 🎉` })
 
 editor.connectNodes(e1, e2)
 editor.connectNodes(e1, e3)

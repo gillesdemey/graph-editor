@@ -61,8 +61,11 @@ class GraphNode extends Group {
     const head = createHead(details)
     this.add(head)
 
-    const handles = this.createHandles(head)
-    this.add(...handles)
+    // we don't draw handles for notes (type: INFO)
+    if (details.type !== 'INFO') {
+      const handles = this.createHandles(head)
+      this.add(...handles)
+    }
 
     const annotations = createAnnotations(details, head)
     this.add(annotations)

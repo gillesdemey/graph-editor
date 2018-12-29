@@ -5,7 +5,7 @@ import { NODE_COLOR } from '../themes/dark'
 module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
   const FONT_SIZE = 15
   const PADDING = 12
-  const ICON_SIZE = 20
+  const ICON_SIZE = icon ? 20 : 0 // no icon = no space needed
   const FONT_COLOR = readableColor(color) // returns black or white
 
   // we'll be adding all children to this group
@@ -65,7 +65,9 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
     headGroup.getStage().container().style.cursor = 'default'
   })
 
-  addIcon(headGroup, icon, ICON_SIZE)
+  if (icon) {
+    addIcon(headGroup, icon, ICON_SIZE)
+  }
 
   return headGroup
 }
