@@ -41,4 +41,3 @@ const e4 = editor.addNode({ x: x + 500, y: y }, {
 
 editor.connectNodes(e1, e2)
 editor.connectNodes(e1, e3)
-editor.connectNodes(e1, e4)
