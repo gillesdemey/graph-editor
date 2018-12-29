@@ -74,7 +74,7 @@ class GraphNode extends Group {
   }
 
   createHandles (bounds) {
-    const HANDLE_SIZE = 12
+    const HANDLE_SIZE = 10
 
     const { width } = bounds.getClientRect()
 
