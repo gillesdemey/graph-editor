@@ -73,6 +73,7 @@ class GraphNode extends Group {
     return this
   }
 
+  // TODO: use "hitFunc" to increase hit-area
   createHandles (bounds) {
     const HANDLE_SIZE = 10
 
