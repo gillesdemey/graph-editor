@@ -134,7 +134,8 @@ class GraphNode extends Group {
       stage.on('mouseup', event => {
         stage.off('mouseup mousemove') // stop listening to move events
 
-        if (event.target.hasName('leftHandle')) {
+        const isHandleTarget = event.target.hasName('leftHandle')
+        if (isHandleTarget) {
           const node2 = event.target.parent
           stage.connectNodes(node1, node2)
         }
