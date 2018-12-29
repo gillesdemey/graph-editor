@@ -6,6 +6,7 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
   const FONT_SIZE = 15
   const PADDING = 12
   const ICON_SIZE = 20
+  const FONT_COLOR = readableColor(color) // returns black or white
 
   // we'll be adding all children to this group
   const headGroup = new Group()
@@ -15,7 +16,7 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
     fontSize: FONT_SIZE,
     fontFamily: 'monospace',
     fontStyle: 'bold',
-    fill: readableColor(color), // returns black or white — depending on contrast
+    fill: FONT_COLOR,
     opacity: 0.9
   })
 
@@ -27,8 +28,8 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
       text: plug,
       fontSize: FONT_SIZE * 0.8,
       fontFamily: 'monospace',
-      fill: readableColor(color),
-      offsetY: -FONT_SIZE,
+      fill: FONT_COLOR,
+      offsetY: -FONT_SIZE * 1.1,
       opacity: 0.5
     })
 
@@ -69,9 +70,9 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
   return headGroup
 }
 
-function addIcon (parent, icon, size) {
+function addIcon (container, icon, size) {
   Image.fromURL(icon, image => {
-    const { width } = parent.getClientRect()
+    const { width } = container.getClientRect()
 
     image.setAttrs({
       x: -(width / 2) + size,
@@ -82,8 +83,8 @@ function addIcon (parent, icon, size) {
       height: size
     })
 
-    parent.add(image).draw()
+    container.add(image).draw()
     // re-draw entire stage to get around a weird z-index bug
-    parent.getStage().draw()
+    container.getStage().draw()
   })
 }
