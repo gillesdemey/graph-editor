@@ -9,7 +9,7 @@ const editor = new Editor({
 
 // editor.on('click', event => {})
 
-const x = window.innerWidth / 2 - 400
+const x = window.innerWidth / 2 - 300
 const y = window.innerHeight / 2
 
 const e1 = editor.addNode({ x, y }, {
@@ -28,7 +28,7 @@ const e1 = editor.addNode({ x, y }, {
     'Snow',
     'Storm'
   ],
-  icon: 'https://twemoji.maxcdn.com/36x36/2614.png',
+  icon: 'https://twemoji.maxcdn.com/2/72x72/2614.png',
   annotations: [
     'https://twemoji.maxcdn.com/16x16/23f0.png',
     'https://twemoji.maxcdn.com/16x16/231b.png'
@@ -39,7 +39,7 @@ const e2 = editor.addNode({ x: x, y: y - 130 }, {
   id: 'isHoliday',
   type: 'SENSOR',
   label: 'isHoliday?',
-  plug: 'isBelgianHoliday@1.0.2',
+  plug: 'isBelgianHoliday v1.0.2',
   icon: 'https://twemoji.maxcdn.com/36x36/1f4e8.png',
   states: [
     'TRUE',

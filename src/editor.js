@@ -1,6 +1,9 @@
 import { FastLayer, Layer, Stage } from 'konva'
+
 import GraphNode from './node'
 import GateNode from './gate'
+import NoteNode from './note'
+
 import { debug } from './utils'
 
 import createCurve from './curve'
@@ -31,10 +34,7 @@ class Editor extends Stage {
   }
 
   addNote (options, details) {
-    const node = new GraphNode(options, { ...details,
-      color: '#feca57',
-      type: 'INFO'
-    })
+    const node = new NoteNode(options, details)
     this._baseLayer.add(node).draw()
 
     return node
