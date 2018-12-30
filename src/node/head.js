@@ -17,7 +17,6 @@ module.exports = ({ label, plug, icon, content, color = NODE_COLOR }) => {
       text: label,
       fontSize: FONT_SIZE,
       fontFamily: 'monospace',
-      fontStyle: 'bold',
       fill: FONT_COLOR,
       opacity: 0.9
     })

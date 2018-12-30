@@ -78,6 +78,7 @@ class GraphNode extends Group {
   // TODO: use "hitFunc" to increase hit-area
   createHandles (bounds) {
     const HANDLE_SIZE = 10
+    const TINTED_COLOR = tint(0.5, HANDLE_COLOR)
 
     const { width } = bounds.getClientRect()
 
@@ -96,7 +97,7 @@ class GraphNode extends Group {
     })
 
     const onMouseEnter = (event) => {
-      event.target.setFill(tint(0.5, HANDLE_COLOR)).draw()
+      event.target.setFill(TINTED_COLOR).draw()
       setCursor(this, 'crosshair')
     }
 

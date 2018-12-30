@@ -1,8 +1,9 @@
 import { Circle, Group, Path, Text } from 'konva'
+import { shade } from 'polished'
 
 const FONT_SIZE = 15
-const FONT_COLOR = '#222f3e'
-const BG_COLOR = '#1dd1a1'
+const FILL_COLOR = shade(0.1, 'white')
+const BG_COLOR = '#474787'
 
 function createGate (details) {
   const { data = '', label = 'GATE' } = details
@@ -10,7 +11,7 @@ function createGate (details) {
   const group = new Group() // adding elements to this group
   const path = new Path({
     data,
-    fill: FONT_COLOR
+    fill: FILL_COLOR
   })
 
   const { width, height: pathHeight } = path.getClientRect()
@@ -22,8 +23,7 @@ function createGate (details) {
     text: label,
     fontSize: FONT_SIZE,
     fontFamily: 'monospace',
-    fontStyle: 'bold',
-    fill: FONT_COLOR
+    fill: FILL_COLOR
   })
 
   const { width: textWidth, height: textHeight } = text.getClientRect()
