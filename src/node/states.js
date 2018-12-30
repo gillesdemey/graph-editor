@@ -1,6 +1,8 @@
 import { Circle, Group, Text } from 'konva'
 import { schemeSpectral as scheme } from 'd3-scale-chromatic'
 
+const HANDLE_RADIUS = 5
+
 module.exports = (details) => {
   const { states = [] } = details
   // we're adding all children to this group
@@ -26,11 +28,10 @@ function createStateItem (state, index, generator) {
     fill: color
   })
 
-  const RADIUS = 5
   const handle = new Circle({
     stroke: color,
-    radius: RADIUS,
-    x: text.width() + (RADIUS * 2.5),
+    radius: HANDLE_RADIUS,
+    x: text.width() + (HANDLE_RADIUS * 2.5),
     y: text.height() / 2
   })
 
