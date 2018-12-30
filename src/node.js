@@ -13,7 +13,8 @@ class GraphNode extends Group {
   constructor (options = {}, details = {}) {
     const defaults = {
       id: options.id,
-      draggable: true
+      draggable: true,
+      name: 'node' // we use for for "findAncestor" and "find" selectors
     }
     super(Object.assign(defaults, options))
 
@@ -122,8 +123,7 @@ class GraphNode extends Group {
     const onMouseDown = (event) => {
       const stage = this.getStage()
 
-      // TODO: get rid of implicit parent relation, somehow
-      const node1 = event.target.parent
+      const node1 = event.target.findAncestor('.node')
 
       const startPos = event.target.getAbsolutePosition()
       const endPos = stage.getPointerPosition()
@@ -148,7 +148,8 @@ class GraphNode extends Group {
         points[6] = points[6] - 2
 
         curve.setPoints(points)
-        stage.batchDraw()
+        // TODO maybe use batchDraw(), here but performance seems janky
+        stage.draw()
       })
 
       stage.on('mouseup', event => {
@@ -156,7 +157,7 @@ class GraphNode extends Group {
 
         const isHandleTarget = event.target.hasName('leftHandle')
         if (isHandleTarget) {
-          const node2 = event.target.parent
+          const node2 = event.target.findAncestor('.node')
           stage.connectNodes(node1, node2)
         }
 

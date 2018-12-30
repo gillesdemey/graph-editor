@@ -35,7 +35,23 @@ const e1 = editor.addNode({ x, y }, {
   ]
 })
 
-const e2 = editor.addNode({ x: x + 300, y: y - 50 }, {
+const e2 = editor.addNode({ x: x, y: y - 130 }, {
+  id: 'isHoliday',
+  type: 'SENSOR',
+  label: 'isHoliday?',
+  plug: 'isBelgianHoliday@1.0.2',
+  icon: 'https://twemoji.maxcdn.com/36x36/1f4e8.png',
+  states: [
+    'TRUE',
+    'FALSE'
+  ]
+})
+
+const andGate = editor.addGate({ x: x + 250, y: y - 80 }, {
+  gateType: 'AND'
+})
+
+const e3 = editor.addNode({ x: x + 450, y: y - 80 }, {
   id: 'twitter_1',
   type: 'ACTUATOR',
   label: 'Send Twitter DM',
@@ -43,19 +59,10 @@ const e2 = editor.addNode({ x: x + 300, y: y - 50 }, {
   icon: 'https://twemoji.maxcdn.com/36x36/1f4ec.png'
 })
 
-const e3 = editor.addNode({ x: x + 300, y: y + 50 }, {
-  id: 'sendmail_1',
-  type: 'ACTUATOR',
-  label: 'Send Email',
-  icon: 'https://twemoji.maxcdn.com/36x36/1f4e8.png'
-})
-
-const andGate = editor.addGate({ x: x + 500, y: y }, {
-  gateType: 'AND'
-})
-
-const note = editor.addNote({ x, y: y - 80 }, { label: `Hello, world!
+editor.addNote({ x: x + 300, y: y + 50 }, { label: `Hello, world!
 This is a simple note! 🎉` })
 
-editor.connectNodes(e1, e2)
-editor.connectNodes(e1, e3)
+editor.connectNodes(e1, andGate)
+editor.connectNodes(e2, andGate)
+editor.connectNodes(andGate, e3)
+

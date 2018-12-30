@@ -1,5 +1,7 @@
 import { Group, Image } from 'konva'
 
+const ICON_SIZE = 16
+
 module.exports = (details, container) => {
   const group = new Group()
   const { annotations = [] } = details
@@ -32,14 +34,12 @@ function placeInRow (nodes, options = {}) {
 }
 
 function createImage (src, container) {
-  const size = 16
-
   Image.fromURL(src, image => {
     image.setAttrs({
-      offsetX: size / 2,
-      offsetY: size / 2,
-      width: size,
-      height: size
+      offsetX: ICON_SIZE / 2,
+      offsetY: ICON_SIZE / 2,
+      width: ICON_SIZE,
+      height: ICON_SIZE
     })
 
     container.add(image)
