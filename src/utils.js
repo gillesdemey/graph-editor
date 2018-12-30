@@ -1,3 +1,5 @@
+import { FastLayer, Rect } from 'konva'
+
 function getBezierPoints (startPost, endPos) {
   const { x: x1, y: y1 } = startPost
   const { x: x2, y: y2 } = endPos
@@ -66,7 +68,32 @@ function absolutePosition (node) {
   return { x: x * scale, y: y * scale }
 }
 
+function debug (nodes, layer) {
+  const drawDebugLayer = (g, { color = 'fuchsia' }) => {
+    const { x, y, width, height } = g.getClientRect({
+      relativeTo: layer
+    })
+
+    const rect = new Rect({
+      x: x,
+      y: y,
+      width: width,
+      height: height,
+      stroke: color,
+      strokeWidth: 1
+    })
+
+    layer.add(rect)
+    layer.getStage().add(layer)
+  }
+
+  nodes.forEach(g => {
+    drawDebugLayer(g, { color: 'fuchsia' })
+  })
+}
+
 export {
+  debug,
   absolutePosition,
   getBezierPoints,
   stopPropagation,

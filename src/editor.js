@@ -1,6 +1,7 @@
-import { Layer, Stage } from 'konva'
+import { FastLayer, Layer, Stage } from 'konva'
 import GraphNode from './node'
 import GateNode from './gate'
+import { debug } from './utils'
 
 import createCurve from './curve'
 import andGate from './gates/and'
@@ -13,7 +14,12 @@ class Editor extends Stage {
     const layer = new Layer()
     this.add(layer)
 
+    // this is the base layer of the editor, most everything goes here
     this._baseLayer = layer
+
+    // we'll use this for visual debugging of the editor
+    this._debugLayer = new FastLayer()
+
     return this
   }
 
@@ -66,6 +72,21 @@ class Editor extends Stage {
     this._baseLayer.draw()
 
     return curve
+  }
+
+  /**
+   * Create a new debug layer and layer it on top of the existing
+   * _baseLayer layer
+   */
+  debug (truthy) {
+    this._debugLayer && this._debugLayer.destroy()
+    if (!truthy) return
+
+    this._debugLayer = new FastLayer()
+    this.add(this._debugLayer)
+
+    const nodes = this.find('Group')
+    debug(nodes, this._debugLayer)
   }
 }
 

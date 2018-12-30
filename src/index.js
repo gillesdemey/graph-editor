@@ -66,3 +66,4 @@ editor.connectNodes(e1, andGate)
 editor.connectNodes(e2, andGate)
 editor.connectNodes(andGate, e3)
 
+editor.debug(false)
