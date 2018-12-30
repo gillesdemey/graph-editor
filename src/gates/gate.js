@@ -1,9 +1,9 @@
 import { Circle, Group, Path, Text } from 'konva'
-import { shade } from 'polished'
+import { lighten } from 'polished'
 
 const FONT_SIZE = 15
-const FILL_COLOR = shade(0.1, 'white')
-const BG_COLOR = '#474787'
+const FILL_COLOR = lighten(0.1, '#50fa7b')
+const BG_COLOR = lighten(0.1, '#50fa7b')
 
 function createGate (details) {
   const { data = '', label = 'GATE' } = details
@@ -42,7 +42,7 @@ function createGate (details) {
   const background = new Circle({
     radius: groupHeight,
     sides: 6,
-    fill: BG_COLOR,
+    stroke: BG_COLOR,
     offsetY: -(groupHeight / 2)
   })
 
