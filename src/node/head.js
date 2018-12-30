@@ -2,7 +2,7 @@ import { Group, Image, Rect, Text } from 'konva'
 import { readableColor } from 'polished'
 import { NODE_COLOR } from '../themes/dark'
 
-module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
+module.exports = ({ label, plug, icon, content, color = NODE_COLOR }) => {
   const FONT_SIZE = 15
   const PADDING = 12
   const ICON_SIZE = icon ? 20 : 0 // no icon = no space needed
@@ -10,18 +10,20 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
 
   // we'll be adding all children to this group
   const headGroup = new Group()
-
-  const title = new Text({
-    text: label,
-    fontSize: FONT_SIZE,
-    fontFamily: 'monospace',
-    fontStyle: 'bold',
-    fill: FONT_COLOR,
-    opacity: 0.9
-  })
-
   const textGroup = new Group()
-  textGroup.add(title)
+
+  if (label) {
+    const title = new Text({
+      text: label,
+      fontSize: FONT_SIZE,
+      fontFamily: 'monospace',
+      fontStyle: 'bold',
+      fill: FONT_COLOR,
+      opacity: 0.9
+    })
+
+    textGroup.add(title)
+  }
 
   if (plug) {
     const description = new Text({
@@ -36,6 +38,15 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
     textGroup.add(description)
   }
 
+  if (content) {
+    headGroup.add(content)
+    const { width: contentWidth, height: contentHeight } = content.getClientRect()
+    headGroup.setAttrs({
+      width: contentWidth,
+      height: contentHeight
+    })
+  }
+
   const { width, height } = textGroup.getClientRect()
 
   textGroup.setPosition({
@@ -43,19 +54,22 @@ module.exports = ({ label, plug, icon, color = NODE_COLOR }) => {
     y: -height / 2
   })
   textGroup.setOffset({ x: -ICON_SIZE })
+  headGroup.add(textGroup)
 
+  const { width: groupWidth, height: groupHeight } = headGroup.getClientRect()
   const background = new Rect({
     fill: color,
-    width: width + (PADDING * 2) + ICON_SIZE * 2,
-    height: height + (PADDING * 2),
+    width: groupWidth + PADDING * 2 + ICON_SIZE * 2,
+    height: groupHeight + PADDING * 2,
     cornerRadius: 6
   })
   background.setPosition({
-    x: -background.getClientRect().width / 2,
+    x: -background.width() / 2,
     y: -background.height() / 2
   })
 
-  headGroup.add(background, textGroup)
+  headGroup.add(background)
+  background.moveToBottom()
 
   headGroup.on('mouseenter', () => {
     headGroup.getStage().container().style.cursor = 'move'

@@ -1,6 +1,9 @@
 import { Layer, Stage } from 'konva'
 import GraphNode from './node'
+import GateNode from './gate'
+
 import createCurve from './curve'
+import andGate from './gates/and'
 
 class Editor extends Stage {
   constructor (options) {
@@ -22,7 +25,21 @@ class Editor extends Stage {
   }
 
   addNote (options, details) {
-    const node = new GraphNode(options, { ...details, color: '#feca57', type: 'INFO' })
+    const node = new GraphNode(options, { ...details,
+      color: '#feca57',
+      type: 'INFO'
+    })
+    this._baseLayer.add(node).draw()
+
+    return node
+  }
+
+  addGate (options, details) {
+    const node = new GateNode(options, { ...details,
+      color: '#2bcbba',
+      content: andGate,
+      type: 'GATE'
+    })
     this._baseLayer.add(node).draw()
 
     return node

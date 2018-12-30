@@ -20,7 +20,8 @@ const e1 = editor.addNode({ x, y }, {
   states: ['clear', 'rainy'],
   icon: 'https://twemoji.maxcdn.com/36x36/2614.png',
   annotations: [
-    'https://twemoji.maxcdn.com/16x16/1f557.png'
+    'https://twemoji.maxcdn.com/16x16/23f0.png',
+    'https://twemoji.maxcdn.com/16x16/231b.png'
   ]
 })
 
@@ -39,11 +40,8 @@ const e3 = editor.addNode({ x: x + 300, y: y + 50 }, {
   icon: 'https://twemoji.maxcdn.com/36x36/1f4e8.png'
 })
 
-const e4 = editor.addNode({ x: x + 500, y: y }, {
-  id: 'formula_1',
-  type: 'SENSOR',
-  label: 'Calculate',
-  icon: 'https://twemoji.maxcdn.com/36x36/1f4b1.png'
+const andGate = editor.addGate({ x: x + 500, y: y }, {
+  gateType: 'AND'
 })
 
 const note = editor.addNote({ x, y: y - 80 }, { label: `Hello, world!

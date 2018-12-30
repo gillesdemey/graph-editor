@@ -10,7 +10,7 @@ module.exports = (details, container) => {
 
   const { width, height } = container.getClientRect()
   group.setPosition({
-    x: -width / 2,
+    x: width / 2,
     y: -height / 2
   })
 
@@ -18,13 +18,15 @@ module.exports = (details, container) => {
 }
 
 function placeInRow (nodes, options = {}) {
-  const { margin = 0 } = options
+  const { margin = 0, direction = 'ltr' } = options
 
   nodes.forEach((node, index) => {
     const { x, y } = node.getPosition()
     const width = node.width()
 
-    const xPos = (x + (width * index)) + (margin * index)
+    const xPos = direction === 'ltr'
+      ? (x + (width * index)) + (margin * index)
+      : (x - (width * index)) - (margin * index)
     node.setPosition({ x: xPos, y })
   })
 }
@@ -41,7 +43,7 @@ function createImage (src, container) {
     })
 
     container.add(image)
-    placeInRow(container.children, { margin: 5 })
+    placeInRow(container.children, { margin: 5, direction: 'rtl' })
     container.draw()
   })
 }
