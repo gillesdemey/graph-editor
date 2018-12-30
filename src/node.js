@@ -7,7 +7,7 @@ import { absolutePosition, getBezierPoints, stopPropagation, setCursor } from '.
 
 import createHead from './node/head'
 import createAnnotations from './node/annotations'
-// import createStates from './node/states'
+import createStates from './node/states'
 
 class GraphNode extends Group {
   constructor (options = {}, details = {}) {
@@ -60,8 +60,21 @@ class GraphNode extends Group {
   }
 
   drawNode (details) {
+    const { states = [] } = details
+
     const head = createHead(details)
     this.add(head)
+
+    if (states.length > 0) {
+      const states = createStates(details)
+      const { height, width } = this.getClientRect()
+      // align right and flow to the left
+      states.setPosition({
+        x: (width / 2) - states.getClientRect().width,
+        y: height / 2 + 10
+      })
+      this.add(states)
+    }
 
     // we don't draw handles for notes (type: INFO)
     if (details.type !== 'INFO') {

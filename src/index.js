@@ -17,7 +17,8 @@ const e1 = editor.addNode({ x, y }, {
   type: 'SENSOR',
   label: 'Get Weather Info',
   plug: 'currentWeather v1.0.8',
-  states: ['clear', 'rainy'],
+  states: [
+    'Clouds', 'Clear', 'Storm', 'Rain', 'Mist', 'Fog', 'Haze', 'Snow', 'Drizzle'],
   icon: 'https://twemoji.maxcdn.com/36x36/2614.png',
   annotations: [
     'https://twemoji.maxcdn.com/16x16/23f0.png',
