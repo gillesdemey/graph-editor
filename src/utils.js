@@ -53,7 +53,21 @@ function setCursor (node, cursor) {
   node.getStage().container().style.cursor = cursor
 }
 
+/**
+ * Get the absolute position of a node
+ *
+ * Correctly uses the scale transformation applied to the node
+ * to calculate the correct coordinates
+ */
+function absolutePosition (node) {
+  const [scale] = node.getAbsoluteTransform().copy().invert().getMatrix()
+  const { x, y } = node.getAbsolutePosition()
+
+  return { x: x * scale, y: y * scale }
+}
+
 export {
+  absolutePosition,
   getBezierPoints,
   stopPropagation,
   setCursor

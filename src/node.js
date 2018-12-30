@@ -3,7 +3,7 @@ import { tint } from 'polished'
 
 import createCurve from './curve'
 import { HANDLE_COLOR } from './themes/dark'
-import { getBezierPoints, stopPropagation, setCursor } from './utils'
+import { absolutePosition, getBezierPoints, stopPropagation, setCursor } from './utils'
 
 import createHead from './node/head'
 import createAnnotations from './node/annotations'
@@ -29,8 +29,8 @@ class GraphNode extends Group {
         const { line, startPos, endPos } = curve
 
         const bezierPoints = getBezierPoints(
-          startPos.getAbsolutePosition(),
-          endPos.getAbsolutePosition()
+          absolutePosition(startPos),
+          absolutePosition(endPos)
         )
         line.setPoints(bezierPoints)
       })
@@ -40,11 +40,13 @@ class GraphNode extends Group {
   }
 
   getRightHandlePosition () {
-    return this.findOne('.rightHandle').getAbsolutePosition()
+    const handle = this.findOne('.rightHandle')
+    return absolutePosition(handle)
   }
 
   getLeftHandlePosition () {
-    return this.findOne('.leftHandle').getAbsolutePosition()
+    const handle = this.findOne('.leftHandle')
+    return absolutePosition(handle)
   }
 
   // tracks connections to other nodes
