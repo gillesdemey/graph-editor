@@ -5,7 +5,7 @@ A very simple graph editor
 
 ## Features
 
-* Drag and Drop
+* Drag and connect nodes
 * Icons and annotations per node
 * Ordinal scale for node states
 * Light and Dark theme
