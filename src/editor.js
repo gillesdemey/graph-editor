@@ -51,27 +51,49 @@ class Editor extends Stage {
     return node
   }
 
-  connectNodes (node1, node2) {
-    if (node1.hasConnection(node2)) return
+  connectNodes (node1, node2, options = {}) {
+    let curves = []
+    const withStates = options.states && options.states.length > 0
 
-    const pos1 = node1.getRightHandlePosition()
-    const pos2 = node2.getLeftHandlePosition()
+    if (!withStates) {
+      if (node1.hasConnection(node2)) return
 
-    const curve = createCurve(pos1, pos2)
+      const startHandle = node1.getRightHandle()
+      const endHandle = node2.getLeftHandle()
 
-    const startPos = node1.findOne('.rightHandle')
-    const endPos = node2.findOne('.leftHandle')
+      const curve = createCurve(startHandle, endHandle)
 
-    // copy line and node to each node
-    node1.addConnection(node2, curve, startPos, endPos)
-    node2.addConnection(node1, curve, startPos, endPos)
+      // copy line and node to each node
+      node1.addConnection(node2, curve, startHandle, endHandle)
+      node2.addConnection(node1, curve, startHandle, endHandle)
 
-    this._baseLayer.add(curve)
-    // lines should always be draw below everything else
-    curve.moveToBottom()
+      curves.push(curve)
+    } else {
+      options.states.forEach(state => {
+        const startHandle = node1.getStateHandle(state)
+        const endHandle = node2.getLeftHandle()
+
+        const color = startHandle.getStroke()
+        const curve = createCurve(startHandle, endHandle, { color })
+
+        // copy line and node to each node
+        node1.addConnection(node2, curve, startHandle, endHandle)
+        node2.addConnection(node1, curve, startHandle, endHandle)
+
+        node1.activateState(state) // make state active (visually)
+        curves.push(curve)
+      })
+    }
+
+    curves.forEach(curve => {
+      this._baseLayer.add(curve)
+      // lines should always be draw below everything else
+      curve.moveToBottom()
+    })
+
     this._baseLayer.draw()
 
-    return curve
+    return curves
   }
 
   /**

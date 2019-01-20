@@ -27,11 +27,11 @@ class GraphNode extends Group {
     // dragmove -> update linked nodes and bezier lines
     this.on('dragmove', () => {
       this.connections.forEach(curve => {
-        const { line, startPos, endPos } = curve
+        const { line, startHandle, endHandle } = curve
 
         const bezierPoints = getBezierPoints(
-          absolutePosition(startPos),
-          absolutePosition(endPos)
+          absolutePosition(startHandle),
+          absolutePosition(endHandle)
         )
         line.setPoints(bezierPoints)
       })
@@ -40,24 +40,33 @@ class GraphNode extends Group {
     return this
   }
 
-  getRightHandlePosition () {
-    const handle = this.findOne('.rightHandle')
-    return absolutePosition(handle)
+  getRightHandle () {
+    return this.findOne('.rightHandle')
   }
 
-  getLeftHandlePosition () {
-    const handle = this.findOne('.leftHandle')
-    return absolutePosition(handle)
+  getLeftHandle () {
+    return this.findOne('.leftHandle')
+  }
+
+  getStateHandle (state) {
+    return this.findOne(`.state:${state}`)
+  }
+
+  activateState (state) {
+    const handle = this.getStateHandle(state)
+    const color = handle.getStroke()
+    handle.setFill(color)
   }
 
   // tracks connections to other nodes
-  addConnection (node, line, startPos, endPos) {
-    if (this.hasConnection(node)) return
-    this.connections.set(node, { line, startPos, endPos })
+  addConnection (node, line, startHandle, endHandle) {
+    // the startHandle should be unique in the set,
+    // the same node or state cannot be linked twice
+    this.connections.set(startHandle, { line, startHandle, endHandle })
   }
 
-  hasConnection (node) {
-    return this.connections.has(node)
+  hasConnection (handle) {
+    return this.connections.has(handle)
   }
 
   drawNode (details) {

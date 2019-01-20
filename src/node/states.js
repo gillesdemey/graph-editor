@@ -29,6 +29,7 @@ function createStateItem (state, index, generator) {
   })
 
   const handle = new Circle({
+    name: 'state:' + state,
     stroke: color,
     radius: HANDLE_RADIUS,
     x: text.width() + (HANDLE_RADIUS * 2.5),

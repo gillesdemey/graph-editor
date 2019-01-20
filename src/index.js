@@ -12,7 +12,7 @@ const editor = new Editor({
 const x = window.innerWidth / 2 - 300
 const y = window.innerHeight / 2
 
-const e1 = editor.addNode({ x, y }, {
+const weatherSensor = editor.addNode({ x, y }, {
   id: 'weather_1',
   type: 'SENSOR',
   label: 'Get Weather Info',
@@ -35,7 +35,7 @@ const e1 = editor.addNode({ x, y }, {
   ]
 })
 
-const e2 = editor.addNode({ x: x, y: y - 130 }, {
+const holidaySensor = editor.addNode({ x: x, y: y - 130 }, {
   id: 'isHoliday',
   type: 'SENSOR',
   label: 'isHoliday?',
@@ -51,7 +51,7 @@ const andGate = editor.addGate({ x: x + 250, y: y - 80 }, {
   gateType: 'AND'
 })
 
-const e3 = editor.addNode({ x: x + 450, y: y - 80 }, {
+const twitterActuator = editor.addNode({ x: x + 450, y: y - 80 }, {
   id: 'twitter_1',
   type: 'ACTUATOR',
   label: 'Send Twitter DM',
@@ -59,11 +59,13 @@ const e3 = editor.addNode({ x: x + 450, y: y - 80 }, {
   icon: 'https://twemoji.maxcdn.com/36x36/1f4ec.png'
 })
 
-editor.addNote({ x: x + 300, y: y + 50 }, { label: `Hello, world!
-This is a simple note! 🎉` })
+editor.addNote({ x: x + 300, y: y + 50 }, {
+  label: `Hello, world!
+This is a simple note! 🎉`
+})
 
-editor.connectNodes(e1, andGate)
-editor.connectNodes(e2, andGate)
-editor.connectNodes(andGate, e3)
+editor.connectNodes(weatherSensor, andGate, { states: ['Clear', 'Mist'] })
+editor.connectNodes(holidaySensor, andGate, { states: ['TRUE'] })
+editor.connectNodes(andGate, twitterActuator)
 
 editor.debug(false)

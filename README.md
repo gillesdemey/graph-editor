@@ -1,7 +1,7 @@
 # graph-editor
 A very simple graph editor
 
-![screen shot 2018-12-30 at 21 45 27](https://user-images.githubusercontent.com/868844/50551091-46835180-0c7c-11e9-92cd-4cb8e1b497a7.png)
+![screen shot 2019-01-20 at 15 49 03](https://user-images.githubusercontent.com/868844/51440803-fcb1e800-1cca-11e9-8bbb-86c9803c3ccd.png)
 
 ## Features
 
